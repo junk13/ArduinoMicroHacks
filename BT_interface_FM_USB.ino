@@ -47,7 +47,7 @@ void loop() {
 
     char* command = strtok(input, "&"); //commands get separated with an &
     while (command != 0) {
-    digitalWrite(LED_BUILTIN, HIGH);
+    //digitalWrite(LED_BUILTIN, HIGH);
 
     char* separator = strchr(command, ':'); // Split the command in two values
     if (separator != 0) {
@@ -166,22 +166,26 @@ void loop() {
           Serial1.println(radio.currdBuV);
           Serial1.print("\tCurr ANTcap:"); 
           Serial1.println(radio.currAntCap);
+
+          digitalWrite(LED_BUILTIN, HIGH);
+          delay(1000);
+          digitalWrite(LED_BUILTIN, LOW);
         } else if(strcmp(separator,"off")) {
           radio.reset();
-          isRSDon = 0;
+          isRDSon = 0;
         }
       }
       if(strcmp(cmd,"radiostation") == 0) {
         if(!isRDSon) {
           radio.beginRDS();
-          isRSDon = 0;
+          isRDSon = 0;
         }
         radio.setRDSstation(separator);
       }
       if(strcmp(cmd,"radiomsg") == 0) {
         if(!isRDSon) {
           radio.beginRDS();
-          isRSDon = 0;
+          isRDSon = 0;
         }
         radio.setRDSbuffer(separator);
       }
@@ -189,7 +193,7 @@ void loop() {
     command = strtok(0, "&"); // Find the next command in input string
     delay(stdDelay);
 
-    digitalWrite(LED_BUILTIN, LOW);
+    //digitalWrite(LED_BUILTIN, LOW);
     }
   }
 }
